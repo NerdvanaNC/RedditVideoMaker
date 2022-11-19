@@ -1,0 +1,5 @@
+*.ini
+audio/
+screenshots/
+video/
+__pycache__/
