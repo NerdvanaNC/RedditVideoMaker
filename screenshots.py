@@ -1,10 +1,18 @@
 from playwright.sync_api import sync_playwright
+from praw.models.reddit.submission import Submission
+from praw.models.reddit.comment import Comment
 
-with sync_playwright() as p:
-  browser = p.firefox.launch()
-  page = browser.new_page()
-  page.goto('https://www.reddit.com/r/AskReddit/comments/yyz6ox/you_wake_up_as_joe_biden_whats_your_first_move/')
-  print(page.title())
-  if page.locator('[data-test-id="post-content"]').is_visible():
-    page.locator('[data-test-id="post-content"]').screenshot(path='screenshots/post.png')
-  browser.close()
+
+def screenshot(link, objID, objType):
+  with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto(link)
+    print(page.title())
+
+    locatorTag = '[data-testid="post-container"]' if objType == 'post' else '.Comment'
+
+    if page.locator(locatorTag).is_visible():
+      page.locator(locatorTag).screenshot(path='screenshots/{}_{}.png'.format(objType, objID))
+    
+    browser.close()

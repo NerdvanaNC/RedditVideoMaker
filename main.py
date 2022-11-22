@@ -4,19 +4,17 @@ from reddit import topComments, topPost
 from audio import writeAudio
 from screenshots import screenshot
 
-## Reddit
+post = topPost()
+comments = topComments(post)
 
-screenshot(topPost()) # Get top post from AskReddit
+writeAudio(post.title, post.id, 'post')
+screenshot(post.url, post.id, 'post')
 
-for comment in topComments(): # Get top comments
-  writeAudio(comment) # TTS
-  screenshot(comment) # Playwright
-
-## TTS
-# Take comment texts from Reddit and save .mp3 snippets
-
-## Playwright
-# Take comment links from Reddit and save screenshots
+for comment in comments:
+  writeAudio(comment.body, comment.id, 'comment')
+  screenshot(comment.url, comment.id, 'comment')
+  writeAudio(comment.replies[0].body, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
+  screenshot(comment.replies[0].permalink, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
 
 ## MoviePy
 # Stitch together the screenshots and TTS clips over a background video.
