@@ -12,7 +12,7 @@ screenshot(post.url, post.id, 'post')
 
 for comment in comments:
   writeAudio(comment.body, comment.id, 'comment')
-  screenshot(comment.url, comment.id, 'comment')
+  screenshot(comment.permalink, comment.id, 'comment')
   writeAudio(comment.replies[0].body, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
   screenshot(comment.replies[0].permalink, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
 
