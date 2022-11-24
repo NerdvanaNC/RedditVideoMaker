@@ -17,4 +17,4 @@ def topPost(skipNum = 0):
   topPost((skipNum) + 5)
 
 def topComments(post):
-  return post.comments[:2]
+  return post.comments[:5]
