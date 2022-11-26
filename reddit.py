@@ -1,20 +1,22 @@
 import praw
 reddit = praw.Reddit('videoMaker')
 
-def topPost(skipNum = 0):
-
-  # recursion, but only upto a certain limit
-  if skipNum >= 50:
-    raise ResourceWarning('We haven\'t found a single usable post in 55 posts. Stopping here.')
-
-  for post in reddit.subreddit('AskReddit').hot(limit=(skipNum + 5)):
-    if not post.spoiler and not post.over_18:
+def topPost():
+  with open('done_posts.txt', 'r') as f:
+    content = f.read()
+  
+  for post in reddit.subreddit('AskReddit').hot(limit=20):
+    if not post.spoiler and not post.over_18 and not post.stickied and not post.id in content:
       return post
   
-  # if none of the posts we got were usable
-  # we repeat the search and up the limit by another 5
-
-  topPost((skipNum) + 5)
+  raise ResourceWarning('We haven\'t found a single usable post in 20 posts. Stopping here.')
 
 def topComments(post):
-  return post.comments[:5]
+  post.comments.replace_more(limit=10)
+
+  finalComments = []
+  for comment in post.comments:
+    if not '>' in comment.body:
+      finalComments.append(comment)
+  
+  return finalComments[:5]
