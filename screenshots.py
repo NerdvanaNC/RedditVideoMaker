@@ -1,6 +1,4 @@
 from playwright.sync_api import sync_playwright
-from praw.models.reddit.submission import Submission
-from praw.models.reddit.comment import Comment
 
 
 def screenshot(link, objID, objType):
