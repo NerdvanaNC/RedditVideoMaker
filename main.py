@@ -13,6 +13,8 @@ post = topPost()
 comments = topComments(post)
 clips = []
 
+print('Using Post: {} - {}'.format(post.title, post.id))
+
 postAudio = writeAudio(post.title, post.id, 'post')
 postScreenshot = screenshot(post.url, post.id, 'post')
 clips.append(makeClip(postAudio, postScreenshot))
