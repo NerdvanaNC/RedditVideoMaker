@@ -22,8 +22,10 @@ clips.append(makeClip(postAudio, postScreenshot))
 for comment in comments:
   commentAudio, commentScreenshot = writeAudio(comment.body, comment.id, 'comment'), screenshot(comment.permalink, comment.id, 'comment')
   clips.append(makeClip(commentAudio, commentScreenshot))
-  subcommentAudio, subcommentScreenshot = writeAudio(comment.replies[0].body, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment'), screenshot(comment.replies[0].permalink, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
-  clips.append(makeClip(subcommentAudio, subcommentScreenshot))
+
+  # Trying out videos with just top-level comments
+  # subcommentAudio, subcommentScreenshot = writeAudio(comment.replies[0].body, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment'), screenshot(comment.replies[0].permalink, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
+  # clips.append(makeClip(subcommentAudio, subcommentScreenshot))
 
 makeVideo(clips, post.id) # make the video
 

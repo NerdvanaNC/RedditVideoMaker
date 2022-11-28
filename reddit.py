@@ -19,4 +19,4 @@ def topComments(post):
     if not '>' in comment.body:
       finalComments.append(comment)
   
-  return finalComments if len(finalComments) <= 5 else finalComments[:5]
+  return finalComments if len(finalComments) <= 8 else finalComments[:8]
