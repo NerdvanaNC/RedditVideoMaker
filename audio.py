@@ -1,16 +1,16 @@
-from gtts import gTTS
-from pydub import AudioSegment
+from google.cloud import texttospeech
 from better_profanity import profanity
 
 def writeAudio(text, objID, objType):
   filename = 'audio/{}_{}.mp3'.format(objType, objID)
+  tts = texttospeech.TextToSpeechClient()
+  text = texttospeech.SynthesisInput(text=profanity.censor(text, '-'))
+  voice = texttospeech.VoiceSelectionParams(language_code='en-AU', name='en-AU-Standard-B', ssml_gender=texttospeech.SsmlVoiceGender.MALE)
+  audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
 
-  tts = gTTS(profanity.censor(text, '-'), lang='en', tld='ie', slow=False)
+  response = tts.synthesize_speech(input=text, voice=voice, audio_config=audio_config)
+
   with open(filename, 'wb') as f:
-    tts.write_to_fp(f)
-  
-  # snippet = AudioSegment.from_file(filename, format='mp3')
-  # spedup = snippet.speedup(playback_speed=1.1)
-  # spedup.export(filename)
+    f.write(response.audio_content)
 
   return filename
