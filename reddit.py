@@ -16,7 +16,7 @@ def topComments(post):
 
   finalComments = []
   for comment in post.comments:
-    if not '>' in comment.body:
+    if not '>' in comment.body and not 'http' in comment.body:
       finalComments.append(comment)
   
   return finalComments if len(finalComments) <= 8 else finalComments[:8]
