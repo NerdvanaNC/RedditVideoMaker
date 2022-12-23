@@ -4,7 +4,11 @@ from better_profanity import profanity
 def writeAudio(text, objID, objType):
   filename = 'audio/{}_{}.mp3'.format(objType, objID)
   tts = texttospeech.TextToSpeechClient()
-  text = texttospeech.SynthesisInput(text=profanity.censor(text, '-'))
+
+  profanity_filtered_text = profanity.censor(text, '-')
+  cleaned_text = profanity_filtered_text.replace('*', '').replace('_', '')
+
+  text = texttospeech.SynthesisInput(text=cleaned_text)
   voice = texttospeech.VoiceSelectionParams(language_code='en-AU', name='en-AU-Standard-B', ssml_gender=texttospeech.SsmlVoiceGender.MALE)
   audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
 
