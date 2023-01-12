@@ -5,9 +5,14 @@ def topPost():
   with open('done_posts.txt', 'r') as f:
     content = f.read()
   
+  post_list = []
+  
   for post in reddit.subreddit('AskReddit').hot(limit=20):
-    if not post.spoiler and not post.over_18 and not post.stickied and not post.id in content:
-      return post
+    if len(post_list) == 5:
+      return post_list
+    else:
+      if not post.spoiler and not post.over_18 and not post.stickied and not post.id in content:
+        post_list.append(post)
   
   raise ResourceWarning('We haven\'t found a single usable post in 20 posts. Stopping here.')
 

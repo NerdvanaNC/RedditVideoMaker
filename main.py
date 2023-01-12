@@ -9,7 +9,19 @@ from video import makeClip, makeVideo
 # constants
 VIDEO_PATH, AUDIO_PATH, IMAGE_PATH = 'video', 'audio', 'screenshots' # no trailing slashes
 
-post = topPost()
+
+listOfPosts = topPosts()
+print("Here are the top 5 posts:")
+for i in range(len(listOfPosts)):
+  print('[{}] - {}'.format(i, listOfPosts[i].title))
+postInput = input('Which post do you want to use? Enter the number in the [brackets]: ')
+print('\nGot it!\n')
+
+post = listOfPosts[int(postInput)]
+comments = topComments(post)
+
+print('Using Post: {} - {}'.format(post.title, post.id))
+
 comments = topComments(post)
 clips = []
 
@@ -22,10 +34,6 @@ clips.append(makeClip(postAudio, postScreenshot))
 for comment in comments:
   commentAudio, commentScreenshot = writeAudio(comment.body, comment.id, 'comment'), screenshot(comment.permalink, comment.id, 'comment')
   clips.append(makeClip(commentAudio, commentScreenshot))
-
-  # Trying out videos with just top-level comments
-  # subcommentAudio, subcommentScreenshot = writeAudio(comment.replies[0].body, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment'), screenshot(comment.replies[0].permalink, '{}_{}'.format(comment.id, comment.replies[0].id), 'subcomment')
-  # clips.append(makeClip(subcommentAudio, subcommentScreenshot))
 
 makeVideo(clips, post.id) # make the video
 
