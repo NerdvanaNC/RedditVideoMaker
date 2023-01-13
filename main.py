@@ -1,7 +1,7 @@
 ### Create a finished video ###
 import os
 
-from reddit import topComments, topPost
+from reddit import topComments, topPosts
 from audio import writeAudio
 from screenshots import screenshot
 from video import makeClip, makeVideo

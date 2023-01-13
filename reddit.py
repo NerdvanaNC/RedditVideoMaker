@@ -1,7 +1,7 @@
 import praw
 reddit = praw.Reddit('videoMaker')
 
-def topPost():
+def topPosts():
   with open('done_posts.txt', 'r') as f:
     content = f.read()
   
