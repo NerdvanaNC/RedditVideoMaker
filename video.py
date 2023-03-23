@@ -22,13 +22,13 @@ def makeClip(audioFile, screenshotFile):
   return screenshotClip
 
 def makeVideo(clipList, filename):
-  startingPoint = random.randrange(1, 514) # Our source is 575s long - keeping a buffer of 60 seconds at the end (575-61=514) means we can subclip the video from any point in this range
+  startingPoint = random.randrange(1, 504) # Our source is 575s long - keeping a buffer of 70 seconds at the end (575-71=504) means we can subclip the video from any point in this range
   duration = 0
 
   for clip in clipList:
     duration += clip.duration
 
-  while duration > 60:
+  while duration > 90:
     longestClip = max(clipList, key=attrgetter('duration'))
     duration -= longestClip.duration
     clipList.remove(longestClip)
